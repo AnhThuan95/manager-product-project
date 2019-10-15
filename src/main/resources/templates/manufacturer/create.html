@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create manufacturer</title>
+</head>
+<style>
+    .error {
+        color: red;
+        font-size: small;
+    }
+</style>
+<body>
+<h1>Create manufacturer</h1>
+<p>
+    <a href="/admin/manufacturer">Manufacturers list</a>
+</p>
+<th:block th:if="${message}">
+    <p th:text="${message}"></p>
+</th:block>
+<form th:action="@{/admin/manufacturer/create}" th:object="${manufacturer}" method="post">
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" th:field="*{name}"/></td>
+            <td><span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span></td>
+        </tr>
+        <tr>
+            <td>Country:</td>
+            <td><input type="text" th:field="*{country}"/></td>
+            <td><span class="error" th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></span></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Create manufacturer"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

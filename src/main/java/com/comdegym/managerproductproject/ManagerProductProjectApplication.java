@@ -1,6 +1,8 @@
 package com.comdegym.managerproductproject;
 
+import com.comdegym.managerproductproject.service.ManufacturerService;
 import com.comdegym.managerproductproject.service.ProductService;
+import com.comdegym.managerproductproject.service.impl.ManufacturerServiceImpl;
 import com.comdegym.managerproductproject.service.impl.ProductServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.SpringApplication;
@@ -34,6 +36,11 @@ public class ManagerProductProjectApplication {
     @Bean
     public ProductService productService(){
         return new ProductServiceImpl();
+    }
+
+    @Bean
+    public ManufacturerService manufacturerService() {
+        return new ManufacturerServiceImpl();
     }
 
     @Bean

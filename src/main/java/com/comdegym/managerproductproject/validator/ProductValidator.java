@@ -1,7 +1,6 @@
 package com.comdegym.managerproductproject.validator;
 
 import com.comdegym.managerproductproject.model.Product;
-import com.comdegym.managerproductproject.service.ProductService;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
