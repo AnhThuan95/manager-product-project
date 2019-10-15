@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>Create product</title>
 </head>
+<style>
+    .error {
+        color: red;
+        font-size: small;
+    }
+</style>
 <body>
 <h1>Create product</h1>
 <p>
@@ -11,20 +17,24 @@
 </p>
 <th:block th:if="${message}">
     <p th:text="${message}"></p>
+    <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
 </th:block>
 <form th:action="@{/admin/create}" th:object="${product}" method="post">
     <table>
         <tr>
             <td>Name:</td>
             <td><input type="text" th:field="*{name}"/></td>
+            <td><span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span></td>
         </tr>
         <tr>
             <td>Description:</td>
             <td><input type="text" th:field="*{description}"/></td>
+            <td><span class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span></td>
         </tr>
         <tr>
             <td>Price:</td>
             <td><input type="text" th:field="*{price}"/></td>
+            <td><span class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span></td>
         </tr>
         <tr>
             <td></td>
