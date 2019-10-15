@@ -36,7 +36,7 @@ public class AdminController {
 
     @PostMapping("/create")
     public ModelAndView createdProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult) {
-        new ProductValidator(productService).validate(product, bindingResult);
+        new ProductValidator().validate(product, bindingResult);
         if (bindingResult.hasFieldErrors()) {
             return new ModelAndView("/products/create");
         }
@@ -60,7 +60,7 @@ public class AdminController {
 
     @PostMapping("/edit")
     public ModelAndView editedProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult) {
-        new ProductValidator(productService).validate(product, bindingResult);
+        new ProductValidator().validate(product, bindingResult);
         ModelAndView modelAndView = new ModelAndView("/products/edit");
         if (!bindingResult.hasFieldErrors()) {
             productService.save(product);
