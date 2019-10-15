@@ -2,15 +2,17 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Delete product</title>
+    <title>Edit product</title>
 </head>
 <body>
-<h1>Delete product</h1>
-<h2>Are you sure?</h2>
+<h1>Edit product</h1>
 <p>
     <a href="/admin">Product list</a>
 </p>
-<form th:action="@{/admin/delete}" th:object="${product}" method="post">
+<th:block th:if="${message}">
+    <p th:text="${message}"></p>
+</th:block>
+<form th:action="@{/admin/edit}" th:object="${product}" method="post">
     <input th:type="hidden" name="id" th:field="*{id}">
     <table>
         <tr>
@@ -27,7 +29,7 @@
         </tr>
         <tr>
             <td></td>
-            <td><input type="submit" value="Delete customer"></td>
+            <td><input type="submit" value="Update customer"></td>
         </tr>
     </table>
 </form>
