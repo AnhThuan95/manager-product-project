@@ -1,6 +1,7 @@
 package com.comdegym.managerproductproject.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "manufacturers")
@@ -9,6 +10,7 @@ public class Manufacturer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @OneToMany(targetEntity = Product.class)
     private String name;
     private String country;
 

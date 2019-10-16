@@ -13,7 +13,9 @@ public class Product {
     private String description;
     private Long price;
 
-//    private String manufacturer;
+    @ManyToOne
+    @JoinColumn(name = "manufacturer_id")
+    private Manufacturer manufacturer;
 
 
     public Product() {
@@ -23,6 +25,13 @@ public class Product {
         this.name = name;
         this.description = description;
         this.price = price;
+    }
+
+    public Product(String name, String description, Long price, Manufacturer manufacturer) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.manufacturer = manufacturer;
     }
 
     public Long getId() {
@@ -55,5 +64,13 @@ public class Product {
 
     public void setPrice(Long price) {
         this.price = price;
+    }
+
+    public Manufacturer getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(Manufacturer manufacturer) {
+        this.manufacturer = manufacturer;
     }
 }
