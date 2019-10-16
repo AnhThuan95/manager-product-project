@@ -18,10 +18,10 @@
     </tr>
     <th:block th:each="product : ${products}">
         <tr>
-            <td th:text="${product.name}"></td>
-            <td th:text="${product.description}"></td>
-            <td th:text="${product.price}"></td>
-            <td th:text="${product.manufacturer?.name}"></td>
+            <td th:text="${product?.name}"></td>
+            <td th:text="${product?.description}"></td>
+            <td th:text="${product?.price}"></td>
+            <td th:text="${product?.manufacturer?.name}"></td>
             <td><a th:href="@{/admin/edit/__${product.id}__ }">Edit</a></td>
             <td><a th:href="@{/admin/delete/__${product.id}__ }">Delete</a></td>
         </tr>
