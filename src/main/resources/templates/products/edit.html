@@ -37,6 +37,14 @@
             <td><span class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span></td>
         </tr>
         <tr>
+            <td>Manufacturer:</td>
+            <td>
+                <select th:field="*{manufacturer}">
+                    <option th:each="m : ${manufacturers}" th:value="${m.id}" th:text="${m.name}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <td></td>
             <td><input type="submit" value="Update product"></td>
         </tr>
