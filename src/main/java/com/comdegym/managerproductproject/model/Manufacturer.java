@@ -10,9 +10,11 @@ public class Manufacturer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(targetEntity = Product.class)
     private String name;
     private String country;
+
+//    @OneToMany(targetEntity = Product.class)
+//    private List<Product> productList;
 
     public Manufacturer() {
     }

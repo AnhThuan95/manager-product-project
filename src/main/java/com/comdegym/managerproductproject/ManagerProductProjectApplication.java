@@ -45,6 +45,7 @@ public class ManagerProductProjectApplication {
 
     @Bean
     public ProductService productService(){
+
         return new ProductServiceImpl();
     }
 

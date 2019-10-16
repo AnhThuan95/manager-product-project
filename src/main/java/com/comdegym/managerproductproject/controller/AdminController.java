@@ -1,6 +1,8 @@
 package com.comdegym.managerproductproject.controller;
 
+import com.comdegym.managerproductproject.model.Manufacturer;
 import com.comdegym.managerproductproject.model.Product;
+import com.comdegym.managerproductproject.service.ManufacturerService;
 import com.comdegym.managerproductproject.service.ProductService;
 import com.comdegym.managerproductproject.validator.ProductValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,14 @@ import java.util.Optional;
 public class AdminController {
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private ManufacturerService manufacturerService;
+
+    @ModelAttribute("manufacturers")
+    public Iterable<Manufacturer> allManufacturers() {
+        return manufacturerService.findAll();
+    }
 
     @GetMapping("")
     public ModelAndView showListProduct() {
