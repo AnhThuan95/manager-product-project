@@ -18,6 +18,12 @@
 <th:block th:if="${message}">
     <p th:text="${message}"></p>
 </th:block>
+
+<form method="get" th:action="@{/admin/{id}/uploadFileEdit(id = ${product.id})}" enctype="multipart/form-data" th:object="${image}">
+    Image: <input type="file" th:field="*{multipartFile}"/><br/>
+<!--    <input th:type="text" name="ida" th:value="${product.id}">-->
+    <input type="submit" value="Submit"/><br/>
+</form>
 <form th:action="@{/admin/edit}" th:object="${product}" method="post">
     <input th:type="hidden" name="id" th:field="*{id}">
     <table>
@@ -25,6 +31,10 @@
             <td>Name:</td>
             <td><input type="text" th:field="*{name}"/></td>
             <td><span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span></td>
+        </tr>
+        <tr>
+            <td>Image:</td>
+            <td><input th:name="urlImage" th:value="${urlImage}"/></td>
         </tr>
         <tr>
             <td>Description:</td>

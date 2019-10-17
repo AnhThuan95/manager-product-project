@@ -13,6 +13,8 @@ public class Product {
     private String description;
     private Long price;
 
+    private String urlImage;
+
     @ManyToOne
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturer;
@@ -31,6 +33,14 @@ public class Product {
         this.name = name;
         this.description = description;
         this.price = price;
+        this.manufacturer = manufacturer;
+    }
+
+    public Product(String name, String description, Long price, String urlImage, Manufacturer manufacturer) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.urlImage = urlImage;
         this.manufacturer = manufacturer;
     }
 
@@ -72,5 +82,13 @@ public class Product {
 
     public void setManufacturer(Manufacturer manufacturer) {
         this.manufacturer = manufacturer;
+    }
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
     }
 }

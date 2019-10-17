@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>Products List</title>
 </head>
+<style>
+    .img{
+        width: 100px;
+        height: 100px;
+    }
+</style>
 <body>
 <a href="/admin/create">Create new product</a>
 <h1>Products</h1>
@@ -24,6 +30,7 @@ There are [[${products.totalElements}]] product(s).
 <table border="1">
     <tr>
         <th>Name</th>
+        <th>Image</th>
         <th>Description</th>
         <th>Price</th>
         <th>Manufacturer</th>
@@ -33,6 +40,7 @@ There are [[${products.totalElements}]] product(s).
     <th:block th:each="product : ${products}">
         <tr>
             <td th:text="${product.name}"></td>
+            <td><img class="img" th:src="@{'/image/' + ${product.urlImage}}"></td>
             <td th:text="${product.description}"></td>
             <td th:text="${product.price}"></td>
             <td th:text="${product.manufacturer?.name}"></td>

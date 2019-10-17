@@ -17,6 +17,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.Formatter;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
@@ -42,6 +43,11 @@ public class ManagerProductProjectApplication {
             ManufacturerService manufacturerService = appContext.getBean(ManufacturerService.class);
             Formatter provinceFormatter = new ManufacturerFormatter(manufacturerService);
             registry.addFormatter(provinceFormatter);
+        }
+
+        @Override
+        public void addResourceHandlers(ResourceHandlerRegistry registry) {
+            registry.addResourceHandler("/image/**").addResourceLocations("file:/home/thuan/Uploads/");
         }
     }
 
