@@ -14,30 +14,30 @@
 <h1>Delete product</h1>
 <h2>Are you sure?</h2>
 <p>
-    <a href="/admin">Product list</a>
+    <a href="/user/cart">Your Cart</a>
 </p>
-<form th:action="@{/admin/delete}" th:object="${product}" method="post">
+<form th:action="@{/user/delete}" th:object="${cart}" method="post">
     <input th:type="hidden" name="id" th:field="*{id}">
     <table>
         <tr>
             <td>Name:</td>
-            <td th:text="${product.name}"/></td>
+            <td th:text="${cart.product.name}"/></td>
         </tr>
         <tr>
             <td>Image:</td>
-            <td><img class="img" th:src="@{'/image/' + ${product.urlImage}}"></td>
+            <td><img class="img" th:src="@{'/image/' + ${cart.product.urlImage}}"></td>
         </tr>
         <tr>
             <td>Description:</td>
-            <td th:text="${product.description}"/></td>
+            <td th:text="${cart.product.description}"/></td>
         </tr>
         <tr>
             <td>Price:</td>
-            <td th:text="${product.price}"/></td>
+            <td th:text="${cart.product.price}"/></td>
         </tr>
         <tr>
             <td>Manufacturer:</td>
-            <td th:text="${product.manufacturer.name}"/></td>
+            <td th:text="${cart.product.manufacturer.name}"/></td>
         </tr>
         <tr>
             <td></td>

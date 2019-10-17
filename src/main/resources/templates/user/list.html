@@ -11,8 +11,9 @@
     }
 </style>
 <body>
+<a href="/login">Login</a>
+<a href="/user/cart">Your Cart</a>
 <h1>Products</h1>
-
 <span th:if="${keyword}">
     Search result for <code>"[[${keyword}]]"</code>, <a th:href="@{/}">click here to clear</a>.<br>
 </span>
@@ -31,7 +32,7 @@ There are [[${products.totalElements}]] product(s).
         <th>Name</th>
         <th>Image</th>
         <th>Description</th>
-        <th>Price</th>
+        <th>Price(VND)</th>
         <th>Manufacturer</th>
         <th>Add to cart</th>
     </tr>
@@ -43,11 +44,13 @@ There are [[${products.totalElements}]] product(s).
             <td th:text="${product.price}"></td>
             <td th:text="${product.manufacturer.name}"></td>
 
-            <td><a th:href="@{/user/add/__${product.id}__ }">Add to cart</a></td>
+            <td><form th:action="@{/user/add/__${product.id}__}"  method="post">
+                <input type="submit" value="Add to cart">
+            </form></td>
         </tr>
     </th:block>
 </table>
-
+<br/><br/>
 <div>
     <a th:if="${products.hasPrevious()}"
        th:href="@{'/'(page=${products.number - 1}, size=${products.size})}">
@@ -59,5 +62,6 @@ There are [[${products.totalElements}]] product(s).
         Next
     </a>
 </div>
+<a href="/logout">Logout</a>
 </body>
 </html>

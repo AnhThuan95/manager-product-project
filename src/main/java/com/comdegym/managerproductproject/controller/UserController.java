@@ -11,10 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
@@ -57,22 +55,35 @@ public class UserController {
         return productService.search(s, pageInfo);
     }
 
-//    @GetMapping("/user/add/{id}")
-//    public ModelAndView addProductToCart(@PathVariable Long id) {
-//        Cart cart = new Cart();
-//        Optional<Product> product = productService.findById(id);
-//        product.ifPresent(cart::setProduct);
-//        cartRepository.save(cart);
-//        ModelAndView modelAndView = new ModelAndView("user/cart");
-//
-//        return modelAndView;
-//    }
+    @PostMapping("/user/add/{id}")
+    public ModelAndView addProductToCart(@PathVariable Long id) {
+        Cart cart = new Cart();
+        Optional<Product> product = productService.findById(id);
+        product.ifPresent(cart::setProduct);
+        cartRepository.save(cart);
+        ModelAndView modelAndView = new ModelAndView("/user/notification");
+        return modelAndView;
+    }
 
-    @GetMapping("/cart")
+    @GetMapping("/user/cart")
     public ModelAndView showCart() {
-        ModelAndView modelAndView = new ModelAndView("user/cart1");
-        //Iterable<Cart> carts = cartRepository.findAll();
-        //modelAndView.addObject("carts", carts);
+        ModelAndView modelAndView = new ModelAndView("user/cart");
+        return modelAndView;
+    }
+
+    @GetMapping("/user/delete/{id}")
+    public ModelAndView deleteProductInCart(@PathVariable Long id) {
+        Optional<Cart> cart = cartRepository.findById(id);
+        ModelAndView modelAndView = new ModelAndView("user/delete");
+        modelAndView.addObject("cart", cart.get());
+        return modelAndView;
+    }
+
+    @PostMapping("/user/delete")
+    public ModelAndView deletedProductInCart(@ModelAttribute("cart") Cart cart) {
+        cartRepository.deleteById(cart.getId());
+
+        ModelAndView modelAndView = new ModelAndView("redirect:/user/cart");
         return modelAndView;
     }
 }
