@@ -6,6 +6,9 @@ import com.comdegym.managerproductproject.service.ManufacturerService;
 import com.comdegym.managerproductproject.service.ProductService;
 import com.comdegym.managerproductproject.validator.ProductValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -29,16 +32,18 @@ public class AdminController {
     }
 
     @GetMapping("")
-    public ModelAndView showListProduct() {
-        Iterable<Product> products = productService.findAll();
-        ModelAndView modelAndView = new ModelAndView("/products/list");
+    public ModelAndView showListProduct(@RequestParam(defaultValue = "") String s,@PageableDefault(size = 1, sort = "name") Pageable pageInfo) {
+        ModelAndView modelAndView = new ModelAndView("products/list");
+
+        Page<Product> products = s.isEmpty() ? getPage(pageInfo) : search(s, pageInfo);
+        modelAndView.addObject("keyword", s);
         modelAndView.addObject("products", products);
         return modelAndView;
     }
 
     @GetMapping("/create")
     public ModelAndView createProduct() {
-        ModelAndView modelAndView = new ModelAndView("/products/create");
+        ModelAndView modelAndView = new ModelAndView("products/create");
         modelAndView.addObject("product", new Product());
         return modelAndView;
     }
@@ -47,12 +52,12 @@ public class AdminController {
     public ModelAndView createdProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult) {
         new ProductValidator().validate(product, bindingResult);
         if (bindingResult.hasFieldErrors()) {
-            return new ModelAndView("/products/create");
+            return new ModelAndView("products/create");
         }
 
         productService.save(product);
 
-        ModelAndView modelAndView = new ModelAndView("/products/create");
+        ModelAndView modelAndView = new ModelAndView("products/create");
         modelAndView.addObject("product", new Product());
         modelAndView.addObject("message", "New product created successfully");
         return modelAndView;
@@ -62,7 +67,7 @@ public class AdminController {
     @GetMapping("/edit/{id}")
     public ModelAndView editProduct(@PathVariable Long id) {
         Optional<Product> product = productService.findById(id);
-        ModelAndView modelAndView = new ModelAndView("/products/edit");
+        ModelAndView modelAndView = new ModelAndView("products/edit");
         modelAndView.addObject("product", product);
         return modelAndView;
     }
@@ -70,7 +75,7 @@ public class AdminController {
     @PostMapping("/edit")
     public ModelAndView editedProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult) {
         new ProductValidator().validate(product, bindingResult);
-        ModelAndView modelAndView = new ModelAndView("/products/edit");
+        ModelAndView modelAndView = new ModelAndView("products/edit");
         if (!bindingResult.hasFieldErrors()) {
             productService.save(product);
 
@@ -83,7 +88,7 @@ public class AdminController {
     @GetMapping("/delete/{id}")
     public ModelAndView deleteProduct(@PathVariable Long id) {
         Optional<Product> product = productService.findById(id);
-        ModelAndView modelAndView = new ModelAndView("/products/delete");
+        ModelAndView modelAndView = new ModelAndView("products/delete");
         modelAndView.addObject("product", product);
         return modelAndView;
     }
@@ -94,5 +99,13 @@ public class AdminController {
 
         ModelAndView modelAndView = new ModelAndView("redirect:/admin");
         return modelAndView;
+    }
+
+    private Page<Product> getPage(Pageable pageInfo) {
+        return productService.findAll(pageInfo);
+    }
+
+    private Page<Product> search(String s, Pageable pageInfo) {
+        return productService.search(s, pageInfo);
     }
 }
